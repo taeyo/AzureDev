@@ -25,7 +25,8 @@ namespace AzureStorageUpload
         string storageConnectionString = string.Empty;
         string sourcePath = @"C:\wmdownloads\Robotica_720.wmv";
         string containerName = "mycontainer";
-        int threadCount = 2;
+        string destBlobName = "myblob";
+        int threadCount = 4;
 
 
         public Form1()
@@ -37,6 +38,10 @@ namespace AzureStorageUpload
         {
             ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount * 8;
 
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -52,7 +57,7 @@ namespace AzureStorageUpload
             }
             catch(FormatException ex)
             {
-                MessageBox.Show("유효한 계정 정보가 아닙니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("유효한 계정 정보가 아닙니다", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -67,11 +72,17 @@ namespace AzureStorageUpload
         }
         private void uploadButton_Click(object sender, EventArgs e)
         {
+            if(FilePath.Text.Length == 0)
+            {
+                MessageBox.Show("파일을 선택해 주세요", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Stopwatch watcher = new Stopwatch();
             watcher.Start();
 
             // Create the destination CloudBlob instance
-            CloudBlockBlob destBlob = blobContainer.GetBlockBlobReference("myblob");
+            CloudBlockBlob destBlob = blobContainer.GetBlockBlobReference(destBlobName);
 
             // Setup the number of the concurrent operations
             TransferManager.Configurations.ParallelOperations = threadCount;
@@ -97,7 +108,7 @@ namespace AzureStorageUpload
                     ts.Hours, ts.Minutes, ts.Seconds,
                     ts.Milliseconds / 10);
 
-                timespent.Text = "소요시간 : " + elapsedTime.ToString();
+                timespent.Text = "Total Elapsed Time : " + elapsedTime.ToString();
             });
 
             // Upload a local blob
@@ -108,17 +119,20 @@ namespace AzureStorageUpload
                         
         }
 
-        private void Context_FileTransferred(object sender, TransferEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         async void UploadAsync(string sourcepath, CloudBlockBlob destBlob, TransferContext context)
         {
             await TransferManager.UploadAsync(
                 sourcePath, destBlob, null, context, CancellationToken.None);
         }
 
+        private void Browse_Click(object sender, EventArgs e)
+        { 
 
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                FilePath.Text = openFileDialog1.FileName;
+                destBlobName = openFileDialog1.SafeFileName;
+            }
+        }
     }
 }
