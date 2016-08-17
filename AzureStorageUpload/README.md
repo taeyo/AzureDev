@@ -1,4 +1,4 @@
-## Blob fast Uploader to Azure Storage 
+## Fast Blob Uploader(Azure Storage) 
 - Azure Storage Data Movement Library (0.2.0) 사용
 - Console, WinForm 예제
 - 로컬 테스트 시에 AzCopy보다 나은 성능을 보임.

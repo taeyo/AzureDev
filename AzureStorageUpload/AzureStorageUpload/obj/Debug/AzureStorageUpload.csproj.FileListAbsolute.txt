@@ -60,3 +60,6 @@ C:\visual studio 2015 projects\AzureStorageUpload\AzureStorageUpload\obj\Debug\A
 C:\visual studio 2015 projects\AzureStorageUpload\AzureStorageUpload\obj\Debug\AzureStorageUpload.csproj.GenerateResource.Cache
 C:\visual studio 2015 projects\AzureStorageUpload\AzureStorageUpload\obj\Debug\AzureStorageUpload.exe
 C:\visual studio 2015 projects\AzureStorageUpload\AzureStorageUpload\obj\Debug\AzureStorageUpload.pdb
+C:\GitHub\AzureDev\AzureStorageUpload\AzureStorageUpload\bin\Debug\AzureStorageUpload.exe.config
+C:\GitHub\AzureDev\AzureStorageUpload\AzureStorageUpload\obj\Debug\AzureStorageUpload.exe
+C:\GitHub\AzureDev\AzureStorageUpload\AzureStorageUpload\obj\Debug\AzureStorageUpload.pdb
