@@ -19,9 +19,9 @@ namespace ASU_Console
             int threadCount = 16;
 
             //일본 서부
-            storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=delmeplz;AccountKey=yex1dGtXg7W5z5r+rCdNCsX1NW9IWelBYfa0ktzqU7irb7l9qQGR6ExSScQ+qKQzlNwtdJHq4oWN85/W+7tbnw==";
+            storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=delmeplz;AccountKey=***";
             //미국 서부
-            //storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=vhdsc9dn6pnh7qeemxvub333;AccountKey=ZGLnkaIicSr/bwf4loDxdNC0f4uxlBXzKAmECku9FAIAZscA4UR+aBaRg7jYikp6R0T9osP0vi3Cf++Hdd6ZUA==";
+            //storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=vhdsc9dn6pnh7qeemxvub333;AccountKey=***";
 
 
             CloudStorageAccount account = CloudStorageAccount.Parse(storageConnectionString);

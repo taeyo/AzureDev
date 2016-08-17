@@ -141,8 +141,7 @@
             this.AccountKey.Name = "AccountKey";
             this.AccountKey.Size = new System.Drawing.Size(408, 23);
             this.AccountKey.TabIndex = 1;
-            this.AccountKey.Text = "yex1dGtXg7W5z5r+rCdNCsX1NW9IWelBYfa0ktzqU7irb7l9qQGR6ExSScQ+qKQzlNwtdJHq4oWN85/W+" +
-    "7tbnw==";
+            this.AccountKey.Text = "****";
             // 
             // AccountName
             // 

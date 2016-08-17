@@ -49,21 +49,30 @@ namespace AzureStorageUpload
             //일본 서부
             storageConnectionString = String.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", AccountName.Text, AccountKey.Text);
             //미국 서부
-            //storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=vhdsc9dn6pnh7qeemxvub333;AccountKey=ZGLnkaIicSr/bwf4loDxdNC0f4uxlBXzKAmECku9FAIAZscA4UR+aBaRg7jYikp6R0T9osP0vi3Cf++Hdd6ZUA==";
+            //storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=vhdsc9dn6pnh7qeemxvub333;AccountKey=***";
 
             try
             {
                 account = CloudStorageAccount.Parse(storageConnectionString);
             }
-            catch(FormatException ex)
+            catch (FormatException fex)
             {
                 MessageBox.Show("유효한 계정 정보가 아닙니다", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+ 
 
             blobClient = account.CreateCloudBlobClient();
             blobContainer = blobClient.GetContainerReference(containerName);
-            blobContainer.CreateIfNotExists();
+            try
+            {
+                blobContainer.CreateIfNotExists();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("저장소에 접근할 수 없습니다. 계정명을 다시 확인하세요", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // 컨트롤들의 상태 변경
             uploadButton.Enabled = true;
@@ -88,6 +97,8 @@ namespace AzureStorageUpload
             TransferManager.Configurations.ParallelOperations = threadCount;
             // Setup the transfer context and track the upoload progress
             TransferContext context = new TransferContext();
+
+            //기존 파일이 있다면 덮어쓰도록 설정
             context.OverwriteCallback = (source, destination) => true;
 
             context.ProgressHandler = new Progress<TransferProgress>((progress) =>
