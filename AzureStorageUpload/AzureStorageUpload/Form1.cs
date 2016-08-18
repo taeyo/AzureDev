@@ -24,6 +24,8 @@ namespace AzureStorageUpload
         int threadCount = 4;
         long fileSize;
 
+        Stopwatch watcher;
+
         public Form1()
         {
             InitializeComponent();
@@ -32,6 +34,8 @@ namespace AzureStorageUpload
         private void Form1_Shown(object sender, EventArgs e)
         {
             ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount * 8;
+
+            watcher = new Stopwatch();
 
             // 파일 다이얼로그 기본 설정
             openFileDialog1.InitialDirectory = "c:\\";
@@ -81,7 +85,7 @@ namespace AzureStorageUpload
             // 컨트롤들의 상태 변경
             uploadButton.Enabled = true;
             ConnectState.ForeColor = Color.Blue;
-            ConnectState.Text = "* 연결되었습니다";
+            ConnectState.Text = "* 연결되었습니다 (동일한 이름의 파일은 덮어씁니다)";
         }
         private void uploadButton_Click(object sender, EventArgs e)
         {
@@ -96,8 +100,7 @@ namespace AzureStorageUpload
             int tNum = 0;
             if (Int32.TryParse(ThreadNum.Text, out tNum)) threadCount = tNum;
 
-            Stopwatch watcher = new Stopwatch();
-            watcher.Start();
+            watcher.Restart();
 
             // Create the destination CloudBlob instance
             CloudBlockBlob destBlob = blobContainer.GetBlockBlobReference(destBlobName);
@@ -115,10 +118,17 @@ namespace AzureStorageUpload
             context.ProgressHandler = new Progress<TransferProgress>((progress) =>
             {
                 bytesTransferred = progress.BytesTransferred;
+                
                 Log.Text = "Bytes uploaded: " + bytesTransferred.ToFileSize();
-                progressBar1.Value = GetProgressPercent(bytesTransferred);
+                Mps.Text = string.Format("({0}/s)", GetMps(bytesTransferred, watcher.Elapsed.TotalMilliseconds).ToFileSize());
+
+                // 상태바 진행상황 변경
+                progressBar1.Value = GetProgressPercent(bytesTransferred);              
 
                 Console.WriteLine("Bytes uploaded: {0}", bytesTransferred);
+                //Console.WriteLine("Stopwatch: {0}", watcher.Elapsed.TotalMilliseconds);
+                //Console.WriteLine("Stopwatch: {0}", mps);
+                //Console.WriteLine("Stopwatch: {0}", mps.ToFileSize());
             });
             context.FileTransferred += new EventHandler<TransferEventArgs>((o, args) =>
             {
@@ -134,6 +144,9 @@ namespace AzureStorageUpload
                     ts.Milliseconds / 10);
 
                 timespent.Text = "Total Elapsed Time : " + elapsedTime.ToString();
+
+                // 초당 전송 크기 계산
+                Mps.Text = string.Format("({0}/s 평균)", GetMps(fileSize, ts.TotalMilliseconds).ToFileSize());
             });
 
             // 다음의 코드는 UI가 있는 환경에서는 UI 블로킹이 일어나기에 async로 분리함.
@@ -149,6 +162,11 @@ namespace AzureStorageUpload
         {
             int percent = (int)Math.Round((double)(100 * bytesTransferred) / fileSize);
             return percent = percent == 0 ? 1 : percent;
+        }
+
+        private long GetMps(long fileSize, double totalMilliseconds)
+        {
+            return (long)Math.Round((double)(fileSize) / (totalMilliseconds / 1000));
         }
 
         async void UploadAsync(string sourcepath, CloudBlockBlob destBlob, TransferContext context)
