@@ -13,6 +13,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.DataMovement;
 using System.Net;
 using System.Diagnostics;
+using AzureStorageUpload.Extensions;
 
 namespace AzureStorageUpload
 {
@@ -27,7 +28,7 @@ namespace AzureStorageUpload
         string containerName = "mycontainer";
         string destBlobName = string.Empty;
         int threadCount = 4;
-
+        long fileSize;
 
         public Form1()
         {
@@ -38,10 +39,12 @@ namespace AzureStorageUpload
         {
             ServicePointManager.DefaultConnectionLimit = Environment.ProcessorCount * 8;
 
+            // 파일 다이얼로그 기본 설정
             openFileDialog1.InitialDirectory = "c:\\";
             openFileDialog1.Filter = "All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             openFileDialog1.RestoreDirectory = true;
+
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -105,9 +108,11 @@ namespace AzureStorageUpload
             //기존 파일이 있다면 덮어쓰도록 설정
             context.OverwriteCallback = (source, destination) => true;
 
+            long bytesTransferred = 0;
             context.ProgressHandler = new Progress<TransferProgress>((progress) =>
             {
-                Log.Text = "Bytes uploaded: " + progress.BytesTransferred.ToString("N0");
+                bytesTransferred = progress.BytesTransferred;
+                Log.Text = "Bytes uploaded: " + bytesTransferred.ToFileSize();
                 Console.WriteLine("Bytes uploaded: {0}", progress.BytesTransferred);
             });
             context.FileTransferred += new EventHandler<TransferEventArgs>((o, args) =>
@@ -148,6 +153,7 @@ namespace AzureStorageUpload
             {
                 FilePath.Text = openFileDialog1.FileName;
                 destBlobName = openFileDialog1.SafeFileName;
+                fileSize = new System.IO.FileInfo(openFileDialog1.FileName).Length;
             }
         }
     }

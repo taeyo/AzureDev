@@ -48,6 +48,7 @@
             this.Browse = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.ThreadNum = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uploadButton.Enabled = false;
             this.uploadButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uploadButton.Location = new System.Drawing.Point(484, 287);
+            this.uploadButton.Location = new System.Drawing.Point(486, 311);
             this.uploadButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.uploadButton.Name = "uploadButton";
             this.uploadButton.Size = new System.Drawing.Size(107, 64);
@@ -70,7 +71,7 @@
             // 
             this.Log.AutoSize = true;
             this.Log.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Log.Location = new System.Drawing.Point(14, 288);
+            this.Log.Location = new System.Drawing.Point(16, 312);
             this.Log.Name = "Log";
             this.Log.Size = new System.Drawing.Size(127, 23);
             this.Log.TabIndex = 1;
@@ -80,7 +81,7 @@
             // 
             this.timespent.AutoSize = true;
             this.timespent.Font = new System.Drawing.Font("Malgun Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timespent.Location = new System.Drawing.Point(12, 330);
+            this.timespent.Location = new System.Drawing.Point(14, 354);
             this.timespent.Name = "timespent";
             this.timespent.Size = new System.Drawing.Size(161, 21);
             this.timespent.TabIndex = 1;
@@ -261,11 +262,19 @@
             this.ThreadNum.TabIndex = 1;
             this.ThreadNum.Text = "4";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(21, 278);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(570, 18);
+            this.progressBar1.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 364);
+            this.ClientSize = new System.Drawing.Size(609, 387);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ThreadNum);
             this.Controls.Add(this.FilePath);
             this.Controls.Add(this.groupBox1);
@@ -311,6 +320,7 @@
         private System.Windows.Forms.Button Browse;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox ThreadNum;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
