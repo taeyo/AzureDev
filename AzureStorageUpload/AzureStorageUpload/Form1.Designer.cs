@@ -46,6 +46,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.FilePath = new System.Windows.Forms.TextBox();
             this.Browse = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ThreadNum = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -211,7 +213,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Malgun Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(18, 243);
+            this.label5.Location = new System.Drawing.Point(153, 243);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(91, 17);
             this.label5.TabIndex = 1;
@@ -220,10 +222,10 @@
             // FilePath
             // 
             this.FilePath.BackColor = System.Drawing.Color.AliceBlue;
-            this.FilePath.Location = new System.Drawing.Point(131, 241);
+            this.FilePath.Location = new System.Drawing.Point(250, 241);
             this.FilePath.Name = "FilePath";
             this.FilePath.ReadOnly = true;
-            this.FilePath.Size = new System.Drawing.Size(373, 23);
+            this.FilePath.Size = new System.Drawing.Size(254, 23);
             this.FilePath.TabIndex = 1;
             // 
             // Browse
@@ -239,16 +241,38 @@
             this.Browse.UseVisualStyleBackColor = true;
             this.Browse.Click += new System.EventHandler(this.Browse_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Malgun Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(26, 243);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 17);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Thread";
+            // 
+            // ThreadNum
+            // 
+            this.ThreadNum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ThreadNum.Location = new System.Drawing.Point(82, 241);
+            this.ThreadNum.Name = "ThreadNum";
+            this.ThreadNum.Size = new System.Drawing.Size(46, 23);
+            this.ThreadNum.TabIndex = 1;
+            this.ThreadNum.Text = "4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 364);
+            this.Controls.Add(this.ThreadNum);
             this.Controls.Add(this.FilePath);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.timespent);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.Log);
             this.Controls.Add(this.Browse);
@@ -285,6 +309,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox FilePath;
         private System.Windows.Forms.Button Browse;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox ThreadNum;
     }
 }
 

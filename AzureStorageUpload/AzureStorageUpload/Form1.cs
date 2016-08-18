@@ -25,7 +25,7 @@ namespace AzureStorageUpload
         string storageConnectionString = string.Empty;
         string sourcePath = @"C:\wmdownloads\Robotica_720.wmv";
         string containerName = "mycontainer";
-        string destBlobName = "myblob";
+        string destBlobName = string.Empty;
         int threadCount = 4;
 
 
@@ -57,7 +57,7 @@ namespace AzureStorageUpload
             }
             catch (FormatException fex)
             {
-                MessageBox.Show("유효한 계정 정보가 아닙니다", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("유효한 계정 정보가 아닙니다\n\n" + fex.Message, "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
  
@@ -70,7 +70,7 @@ namespace AzureStorageUpload
             }
             catch (Exception ex)
             {
-                MessageBox.Show("저장소에 접근할 수 없습니다. 계정명을 다시 확인하세요", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("저장소에 접근할 수 없습니다. 계정명을 다시 확인하세요\n\n" + ex.Message, "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -87,6 +87,9 @@ namespace AzureStorageUpload
                 return;
             }
 
+            int tNum = 0;
+            if (Int32.TryParse(ThreadNum.Text, out tNum)) threadCount = tNum;
+
             Stopwatch watcher = new Stopwatch();
             watcher.Start();
 
@@ -95,6 +98,7 @@ namespace AzureStorageUpload
 
             // Setup the number of the concurrent operations
             TransferManager.Configurations.ParallelOperations = threadCount;
+
             // Setup the transfer context and track the upoload progress
             TransferContext context = new TransferContext();
 
@@ -122,10 +126,11 @@ namespace AzureStorageUpload
                 timespent.Text = "Total Elapsed Time : " + elapsedTime.ToString();
             });
 
-            // Upload a local blob
+            // 다음의 코드는 UI가 있는 환경에서는 UI 블로킹이 일어나기에 async로 분리함.
             //var task = TransferManager.UploadAsync(
             //    sourcePath, destBlob, null, context, CancellationToken.None);
             //task.Wait();
+
             UploadAsync(sourcePath, destBlob, context);
                         
         }
