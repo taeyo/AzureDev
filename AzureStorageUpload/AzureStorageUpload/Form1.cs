@@ -45,6 +45,13 @@ namespace AzureStorageUpload
             openFileDialog1.FilterIndex = 1;
             openFileDialog1.RestoreDirectory = true;
 
+            // 진행바 기본 설정
+            progressBar1.Minimum = 1;
+            progressBar1.Maximum = 100;
+            progressBar1.Value = 1;
+
+            //progressBar1.Style = ProgressBarStyle.Marquee;
+            progressBar1.Enabled = true;
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -84,7 +91,9 @@ namespace AzureStorageUpload
         }
         private void uploadButton_Click(object sender, EventArgs e)
         {
-            if(FilePath.Text.Length == 0)
+            timespent.Text = string.Empty;
+
+            if (FilePath.Text.Length == 0)
             {
                 MessageBox.Show("파일을 선택해 주세요", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -113,7 +122,9 @@ namespace AzureStorageUpload
             {
                 bytesTransferred = progress.BytesTransferred;
                 Log.Text = "Bytes uploaded: " + bytesTransferred.ToFileSize();
-                Console.WriteLine("Bytes uploaded: {0}", progress.BytesTransferred);
+                progressBar1.Value = GetProgressPercent(bytesTransferred);
+
+                Console.WriteLine("Bytes uploaded: {0}", bytesTransferred);
             });
             context.FileTransferred += new EventHandler<TransferEventArgs>((o, args) =>
             {
@@ -140,6 +151,12 @@ namespace AzureStorageUpload
                         
         }
 
+        private int GetProgressPercent(long bytesTransferred)
+        {
+            int percent = (int)Math.Round((double)(100 * bytesTransferred) / fileSize);
+            return percent = percent == 0 ? 1 : percent;
+        }
+
         async void UploadAsync(string sourcepath, CloudBlockBlob destBlob, TransferContext context)
         {
             await TransferManager.UploadAsync(
@@ -151,9 +168,10 @@ namespace AzureStorageUpload
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                FilePath.Text = openFileDialog1.FileName;
-                destBlobName = openFileDialog1.SafeFileName;
-                fileSize = new System.IO.FileInfo(openFileDialog1.FileName).Length;
+                sourcePath = openFileDialog1.FileName;
+                FilePath.Text = sourcePath;
+                destBlobName = System.IO.Path.GetFileName(sourcePath);
+                fileSize = new System.IO.FileInfo(sourcePath).Length;
             }
         }
     }
