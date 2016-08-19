@@ -50,6 +50,7 @@
             this.ThreadNum = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.Mps = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,14 +95,14 @@
             this.label1.Font = new System.Drawing.Font("Malgun Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(14, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(490, 21);
+            this.label1.Size = new System.Drawing.Size(474, 21);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Azure Storage Data Movement Library(v0.2.0)을 사용하여 제작함";
+            this.label1.Text = "Azure Storage Data Movement Library(v0.2.0)을 사용하여 제작";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(18, 33);
+            this.linkLabel1.Location = new System.Drawing.Point(15, 29);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(336, 15);
             this.linkLabel1.TabIndex = 2;
@@ -112,6 +113,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.AccountKey);
             this.groupBox1.Controls.Add(this.AccountName);
@@ -129,11 +131,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(141, 93);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(408, 23);
+            this.textBox1.Size = new System.Drawing.Size(171, 23);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "mycontainer";
             // 
@@ -234,10 +234,10 @@
             // 
             this.Browse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Browse.Location = new System.Drawing.Point(508, 238);
+            this.Browse.Location = new System.Drawing.Point(508, 241);
             this.Browse.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Browse.Name = "Browse";
-            this.Browse.Size = new System.Drawing.Size(83, 26);
+            this.Browse.Size = new System.Drawing.Size(83, 23);
             this.Browse.TabIndex = 0;
             this.Browse.Text = "Browse..";
             this.Browse.UseVisualStyleBackColor = true;
@@ -255,8 +255,6 @@
             // 
             // ThreadNum
             // 
-            this.ThreadNum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.ThreadNum.Location = new System.Drawing.Point(82, 241);
             this.ThreadNum.Name = "ThreadNum";
             this.ThreadNum.Size = new System.Drawing.Size(46, 23);
@@ -265,6 +263,8 @@
             // 
             // progressBar1
             // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(21, 278);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(570, 18);
@@ -279,6 +279,16 @@
             this.Mps.Size = new System.Drawing.Size(70, 23);
             this.Mps.TabIndex = 1;
             this.Mps.Text = "( 0 M/s)";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Malgun Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(318, 98);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(156, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "* 존재하지 않으면 생성됩니다";
             // 
             // Form1
             // 
@@ -334,6 +344,7 @@
         private System.Windows.Forms.TextBox ThreadNum;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label Mps;
+        private System.Windows.Forms.Label label7;
     }
 }
 
