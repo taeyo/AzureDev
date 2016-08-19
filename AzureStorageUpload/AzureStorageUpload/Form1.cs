@@ -100,6 +100,7 @@ namespace AzureStorageUpload
             int tNum = 0;
             if (Int32.TryParse(ThreadNum.Text, out tNum)) threadCount = tNum;
 
+            uploadButton.Enabled = false;
             watcher.Restart();
 
             // Create the destination CloudBlob instance
@@ -119,7 +120,7 @@ namespace AzureStorageUpload
             {
                 bytesTransferred = progress.BytesTransferred;
                 
-                Log.Text = "Bytes uploaded: " + bytesTransferred.ToFileSize();
+                Log.Text = "Bytes uploaded: " + (bytesTransferred == 0 ? "초기화 중.." : bytesTransferred.ToFileSize());
                 Mps.Text = string.Format("({0}/s)", GetMps(bytesTransferred, watcher.Elapsed.TotalMilliseconds).ToFileSize());
 
                 // 상태바 진행상황 변경
@@ -144,9 +145,7 @@ namespace AzureStorageUpload
                     ts.Milliseconds / 10);
 
                 timespent.Text = "Total Elapsed Time : " + elapsedTime.ToString();
-
-                // 초당 전송 크기 계산
-                Mps.Text = string.Format("({0}/s 평균)", GetMps(fileSize, ts.TotalMilliseconds).ToFileSize());
+                uploadButton.Enabled = true;
             });
 
             // 다음의 코드는 UI가 있는 환경에서는 UI 블로킹이 일어나기에 async로 분리함.

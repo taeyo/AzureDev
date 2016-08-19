@@ -64,7 +64,7 @@
             this.uploadButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.uploadButton.Name = "uploadButton";
             this.uploadButton.Size = new System.Drawing.Size(107, 64);
-            this.uploadButton.TabIndex = 0;
+            this.uploadButton.TabIndex = 7;
             this.uploadButton.Text = "Upload";
             this.uploadButton.UseVisualStyleBackColor = true;
             this.uploadButton.Click += new System.EventHandler(this.uploadButton_Click);
@@ -105,7 +105,7 @@
             this.linkLabel1.Location = new System.Drawing.Point(15, 29);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(336, 15);
-            this.linkLabel1.TabIndex = 2;
+            this.linkLabel1.TabIndex = 8;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "https://github.com/Azure/azure-storage-net-data-movement";
             // 
@@ -134,7 +134,7 @@
             this.textBox1.Location = new System.Drawing.Point(141, 93);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(171, 23);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.TabIndex = 3;
             this.textBox1.Text = "mycontainer";
             // 
             // AccountKey
@@ -144,7 +144,7 @@
             this.AccountKey.Location = new System.Drawing.Point(141, 62);
             this.AccountKey.Name = "AccountKey";
             this.AccountKey.Size = new System.Drawing.Size(408, 23);
-            this.AccountKey.TabIndex = 1;
+            this.AccountKey.TabIndex = 2;
             this.AccountKey.Text = "****";
             // 
             // AccountName
@@ -193,7 +193,7 @@
             this.Connect.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Connect.Name = "Connect";
             this.Connect.Size = new System.Drawing.Size(82, 26);
-            this.Connect.TabIndex = 0;
+            this.Connect.TabIndex = 4;
             this.Connect.Text = "Connect";
             this.Connect.UseVisualStyleBackColor = true;
             this.Connect.Click += new System.EventHandler(this.Connect_Click);
@@ -238,7 +238,7 @@
             this.Browse.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Browse.Name = "Browse";
             this.Browse.Size = new System.Drawing.Size(83, 23);
-            this.Browse.TabIndex = 0;
+            this.Browse.TabIndex = 6;
             this.Browse.Text = "Browse..";
             this.Browse.UseVisualStyleBackColor = true;
             this.Browse.Click += new System.EventHandler(this.Browse_Click);
@@ -258,7 +258,7 @@
             this.ThreadNum.Location = new System.Drawing.Point(82, 241);
             this.ThreadNum.Name = "ThreadNum";
             this.ThreadNum.Size = new System.Drawing.Size(46, 23);
-            this.ThreadNum.TabIndex = 1;
+            this.ThreadNum.TabIndex = 5;
             this.ThreadNum.Text = "4";
             // 
             // progressBar1
@@ -273,12 +273,12 @@
             // Mps
             // 
             this.Mps.AutoSize = true;
-            this.Mps.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Mps.Location = new System.Drawing.Point(302, 312);
+            this.Mps.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Mps.Location = new System.Drawing.Point(270, 312);
             this.Mps.Name = "Mps";
-            this.Mps.Size = new System.Drawing.Size(130, 23);
+            this.Mps.Size = new System.Drawing.Size(177, 19);
             this.Mps.TabIndex = 1;
-            this.Mps.Text = "( 0 M/s)               ";
+            this.Mps.Text = "( 0 M/s)                             ";
             // 
             // label7
             // 
