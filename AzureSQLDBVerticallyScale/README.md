@@ -8,6 +8,8 @@ This runbook enables one to scale (up or down) an Azure SQL Database on a schedu
 You can also check the script on [https://gallery.technet.microsoft.com/scriptcenter/Azure-SQL-Database-e957354f#content](https://gallery.technet.microsoft.com/scriptcenter/Azure-SQL-Database-e957354f#content)
 but, unfortunately It seems to not be working well on current Azure portal(V2).  
 
+It might be not the best script but will work.
+
 ```powershell
 workflow Set-AzureRmSqlDatabaseTier
 {
