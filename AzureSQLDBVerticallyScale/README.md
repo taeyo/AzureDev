@@ -10,6 +10,8 @@ but, unfortunately It seems to not be working well on current Azure portal(V2).
 
 It might be not the best script but will work.
 
+![azureDbScaleVertially.png](azureDbScaleVertially.png)
+
 ```powershell
 workflow Set-AzureRmSqlDatabaseTier
 {
