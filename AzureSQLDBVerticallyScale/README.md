@@ -1,6 +1,6 @@
 # Azure SQL Database: Vertically Scale
 
-이 스크립트는 Azure Aumomation을 사용해서 특정 시간에 Azure SQL Database의 스케일을 변경할 수 있는 PowerShell Workflow Runbook입니다. 사실 Azure Automation Gallery에 이미 동일한 동작을 하는 스크립트가 올라와 있지만 그 스크립트는 현재의 버전의 Azure Automation에서는 올바로 동작하지 않는 것으로 보입니다. 해서, 현재 버전의 Automation에서 동작하는 스크립트를 한번 작성해 보았습니다. 
+이 스크립트는 Azure Automation을 사용해서 특정 시간에 Azure SQL Database의 스케일을 변경할 수 있는 PowerShell Workflow Runbook입니다. 사실 Azure Automation Gallery에 이미 동일한 동작을 하는 스크립트가 올라와 있지만 그 스크립트는 현재의 버전의 Azure Automation에서는 올바로 동작하지 않는 것으로 보입니다. 해서, 현재 버전의 Automation에서 동작하는 스크립트를 한번 작성해 보았습니다. 
 
 [Eng]   
 This runbook enables one to scale (up or down) an Azure SQL Database on a schedule using Azure Automation.
