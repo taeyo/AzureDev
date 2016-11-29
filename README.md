@@ -5,7 +5,7 @@
     - Console, WinForm 예제
     - 로컬 테스트 시에 AzCopy보다 나은 성능을 보임.
     - 참고링크 [Microsoft Azure Storage Data Movement Library (0.2.0)](https://github.com/Azure/azure-storage-net-data-movement)
-2. [Azure 파일 업로드 예제 (C#) by taeyo](https://github.com/jiyongseong/AzurePaaSHol/tree/master/azure_storage_account/AzureFileUploadWeb)
+2. [Azure 파일 업로드 예제 : WebForm, HTML & Ajax](https://github.com/jiyongseong/AzurePaaSHol/tree/master/azure_storage_account/AzureFileUploadWeb)
     - ASP.NET MVC에서 그리드는 Grid.MVC를 활용
     - 추가 예제는 jQuery.Form을 활용한 HTML/Javascript 파일 업로드 방식으로 작성
     - 그리드는 Knockout을 활용하여 MVVM 으로 구현(Json 바인딩)
