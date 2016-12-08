@@ -11,7 +11,7 @@ namespace DxRemember.Utils
 {
     public class OcrHelper
     {
-        public async void Process(IDialogContext context, string fileUri)
+        public async Task<string> Process(IDialogContext context, string fileUri)
         {
             string subscriptKey = CloudConfigurationManager.GetSetting("Ocp-Apim-Subscription-Key");
             string ocrApiRoot = CloudConfigurationManager.GetSetting("Ocr-Api-Root");
@@ -53,6 +53,7 @@ namespace DxRemember.Utils
             }
 
             await context.PostAsync(text);
+            return text;
         }
     }
 }

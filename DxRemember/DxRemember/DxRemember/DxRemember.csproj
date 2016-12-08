@@ -144,6 +144,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="App.config" />
+    <None Include="Properties\PublishProfiles\DxRemember - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
