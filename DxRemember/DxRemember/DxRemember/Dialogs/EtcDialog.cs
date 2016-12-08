@@ -21,42 +21,10 @@
 
         public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
         {
-            string subscriptKey = CloudConfigurationManager.GetSetting("Ocp-Apim-Subscription-Key");
-            string ocrApiRoot = CloudConfigurationManager.GetSetting("Ocr-Api-Root");
-            string text = string.Empty;
-
             string fileUri = "https://studydemo.blob.core.windows.net/bizcards/IMG_1328.JPG";
-            Utils.OCRClient ocr = new Utils.OCRClient(subscriptKey, ocrApiRoot);
-
-            //Retry 
-            var exceptions = new List<Exception>();
-            for (int retry = 0; retry < 3; retry++)
-            {
-                try
-                {
-                    if (retry > 0)
-                    {
-                        Task<HttpResponseMessage> msg = ocr.EvaluateImageAsync(fileUri);
-
-                        Task<string> textResult = ocr.ProcessResponseAsync(msg.Result);
-                        text = textResult.Result;
-
-                        // Return or break.
-                        break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    exceptions.Add(ex);
-                }
-            }
-
-            if(exceptions.Count > 1)
-            {
-                throw new AggregateException(exceptions);
-            }
-
-            await context.PostAsync(text);
+            Utils.OcrHelper ocr = new Utils.OcrHelper();
+            ocr.Process(context, fileUri);
+            context.Done(0);
 
             context.Wait(this.MessageReceivedAsync);
         }

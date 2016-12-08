@@ -58,7 +58,8 @@ namespace DxRemember.Utils
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            string json = "{\"url\":\"https://studydemo.blob.core.windows.net/bizcards/IMG_1328.JPG\"}";
+            //string json = "{\"url\":\"https://studydemo.blob.core.windows.net/bizcards/IMG_1328.JPG\"}";
+            string json = "{\"url\":\"" + fileUri + "\"}";
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             return await client.PostAsync(requestUrl.ToString(), content).ConfigureAwait(false);

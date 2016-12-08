@@ -38,19 +38,18 @@
                         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     }
 
-                    // 업로드 된 이미지의 Stream 가져오기
+                    // 1. 업로드된 이미지의 Stream 가져오기
                     var responseMessage = await httpClient.GetAsync(attachment.ContentUrl);
                     //var contentLenghtBytes = responseMessage.Content.Headers.ContentLength;
 
                     Stream contentStream = await responseMessage.Content.ReadAsStreamAsync();
 
-                    // 이미지를 BLOB에 저장
+                    // 2. 이미지를 BLOB에 저장
                     // 랜덤 이름을 만들어서 Azure Storage에 저장하기
                     string fileName = attachment.Name;
 
                     Random random = new Random();
                     int randomNumber = random.Next(100000, 1000000);
-
                     fileName = string.Format("{0}-{1}", randomNumber.ToString(), fileName);
 
                     Utils.Upload2ASS up = new Utils.Upload2ASS();
@@ -58,8 +57,9 @@
 
                     await context.PostAsync("사진이 업로드 되었습니다. 이제 분석을 요청합니다. 잠시만 기다려 주십시오...");
 
-                    // Cognitive Service의 OCR API 호출하기
-
+                    // 3. Cognitive Service의 OCR API 호출하기
+                    Utils.OcrHelper ocr = new Utils.OcrHelper();
+                    ocr.Process(context, fileUri.ToString());
 
 
                     //await context.PostAsync($"Attachment of {attachment.ContentType} type and size of {contentLenghtBytes} bytes received.");
@@ -73,5 +73,8 @@
 
             context.Wait(this.MessageReceivedAsync);
         }
+
+
+        
     }
 }
