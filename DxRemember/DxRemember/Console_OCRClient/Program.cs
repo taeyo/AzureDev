@@ -12,7 +12,7 @@ namespace Console_OCRClient
     {
         static void Main(string[] args)
         {
-            OCRClient ocr = new OCRClient("a93467daab01412ab0b47d7292ed1cf2", "https://api.projectoxford.ai/vision/v1.0/ocr");
+            OCRClient ocr = new OCRClient("*************", "https://api.projectoxford.ai/vision/v1.0/ocr");
             Task<HttpResponseMessage> msg = ocr.EvaluateImageAsync();
 
             Task<string> result = ocr.ProcessResponseAsync(msg.Result);
