@@ -26,32 +26,15 @@
             Utils.OcrHelper ocr = new Utils.OcrHelper();
             string content = await ocr.Process(context, fileUri);
 
-            content = content.Replace('\"', ' ');
+            Utils.RegUtils reg = new Utils.RegUtils();
+            List<string> msgs = reg.ExtractAndFormatData(content);
 
-            string name, phone, email;
+            await context.PostAsync("추출된 고객의 정보입니다");
 
-            string namePattern = @"[가-힣| *]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}";
-            string emailPattern = @"([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)";
-
-            Match match = Regex.Match(content, namePattern);
-            if (match.Success)
+            foreach (string s in msgs)
             {
-                name = match.Captures[0].Value;
+                await context.PostAsync(s);
             }
-
-            match = Regex.Match(content, emailPattern);
-            if (match.Success)
-            {
-                email = match.Captures[0].Value;
-            }
-
-            int iPos = content.IndexOf("text : 010");
-            iPos = content.IndexOf("text", iPos + 2);
-            string fnum = content.Substring(iPos + 7, 4);
-            iPos = content.IndexOf("text", iPos + 2);
-            string lnum = content.Substring(iPos + 7, 4);
-
-
 
             context.Done(0);
 

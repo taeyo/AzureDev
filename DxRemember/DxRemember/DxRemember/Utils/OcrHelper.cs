@@ -52,7 +52,7 @@ namespace DxRemember.Utils
                 throw new AggregateException(exceptions);
             }
 
-            await context.PostAsync(text);
+            //await context.PostAsync(text);
             return text;
         }
     }

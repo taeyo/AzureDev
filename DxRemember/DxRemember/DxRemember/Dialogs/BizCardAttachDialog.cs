@@ -10,6 +10,7 @@
     using Microsoft.Bot.Connector;
     using System.IO;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System.Collections.Generic;
 
     [Serializable]
     internal class BizCardAttachDialog : IDialog<object>
@@ -59,9 +60,21 @@
 
                     // 3. Cognitive Service의 OCR API 호출하기
                     Utils.OcrHelper ocr = new Utils.OcrHelper();
-                    ocr.Process(context, fileUri.ToString());
+                    string content = await ocr.Process(context, fileUri.ToString());
 
+                    // 4. 정규표현식으로 필요한 정보 추출하기
+                    Utils.RegUtils reg = new Utils.RegUtils();
+                    List<string> msgs = reg.ExtractAndFormatData(content);
 
+                    await context.PostAsync("추출된 고객의 정보입니다");
+
+                    foreach (string s in msgs)
+                    {
+                        await context.PostAsync(s);
+                    }
+
+                    await context.PostAsync("상기 정보는 Microsoft Flow를 통해서 메일로 전송되었습니다.");
+                    context.Done(0);
                     //await context.PostAsync($"Attachment of {attachment.ContentType} type and size of {contentLenghtBytes} bytes received.");
                 }
             }
