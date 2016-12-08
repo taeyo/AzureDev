@@ -68,6 +68,10 @@
 
                     await context.PostAsync("추출된 고객의 정보입니다");
 
+                    msgs[0] = "이름 : " + msgs[0];
+                    msgs[1] = "전화번호 : " + msgs[1];
+                    msgs[2] = "전자메일 : " + msgs[2];
+
                     foreach (string s in msgs)
                     {
                         await context.PostAsync(s);

@@ -80,7 +80,7 @@
             }
             catch (Exception ex)
             {
-                await context.PostAsync($"작업 실패 : {ex.Message}");
+                await context.PostAsync($"쏘리 : {ex.Message}");
             }
             finally
             {

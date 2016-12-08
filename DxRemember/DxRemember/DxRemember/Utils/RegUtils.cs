@@ -16,7 +16,7 @@ namespace DxRemember.Utils
             string phone = string.Empty;
             string email = string.Empty;
 
-            string namePattern = @"[가-힣| *]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}";
+            string namePattern = @"[가-힣| *]{2,6}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}";
             string emailPattern = @"([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)";
 
             Match match = Regex.Match(content, namePattern);
