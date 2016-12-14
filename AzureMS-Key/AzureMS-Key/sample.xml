@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TokenRestrictionTemplate xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/Azure/MediaServices/KeyDelivery/TokenRestrictionTemplate/v1">
+  <AlternateVerificationKeys />
+  <Audience>urn:test</Audience>
+  <Issuer>http://testacs</Issuer>
+  <OpenIdConnectDiscoveryDocument i:nil="true" />
+  <PrimaryVerificationKey i:type="SymmetricVerificationKey">
+    <KeyValue>3r5xCRgLKKOtiBin5uCUPpUeMdPbGMKINLXAWaav6TbZzjLZM6AHcwU73YZw5c1MtOaVYcsIrUQ5CqLWR3RQpw==</KeyValue>
+  </PrimaryVerificationKey>
+  <RequiredClaims>
+    <TokenClaim>
+      <ClaimType>urn:microsoft:azure:mediaservices:contentkeyidentifier</ClaimType>
+      <ClaimValue i:nil="true" />
+    </TokenClaim>
+  </RequiredClaims>
+  <TokenType>SWT</TokenType>
+</TokenRestrictionTemplate>
