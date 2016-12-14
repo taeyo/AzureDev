@@ -35,7 +35,7 @@ namespace AzureMS_Key
             string name = string.Empty;
             string id = string.Empty;
 
-            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"****************");
+            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"******************");
 
             Console.WriteLine("Listing Assets");
             foreach (var asset in _mediaContext.Assets)
@@ -50,6 +50,12 @@ namespace AzureMS_Key
                     Console.WriteLine("    ContentKeys id : {0}", contentKey.Id);
 
                     var options = ListContentKeyAuthorizationPolicyOptions(_mediaContext, contentKey);
+                    if(options == null)
+                    {
+                        Console.WriteLine("Can not create Token because AuthorizationPolicyId is not exist");
+                        continue;
+                    }
+
                     selectedOption = options.FirstOrDefault();
 
                     //첫번째 Option을 무조건 채택했음.
@@ -93,23 +99,25 @@ namespace AzureMS_Key
 
         private static IList<IContentKeyAuthorizationPolicyOption> ListContentKeyAuthorizationPolicyOptions(CloudMediaContext _mediaContext, IContentKey contentKey)
         {
-            IContentKeyAuthorizationPolicy myAuthPolicy = _mediaContext.ContentKeyAuthorizationPolicies.Where(p => p.Id == contentKey.AuthorizationPolicyId).FirstOrDefault();
-            if (myAuthPolicy != null)
+            IList<IContentKeyAuthorizationPolicyOption> options = null;
+
+            if (contentKey.AuthorizationPolicyId != null)
             {
-                Console.WriteLine("        AuthorizationPolicyOptions List", contentKey.Name);
-                foreach (var option in myAuthPolicy.Options)
+                IContentKeyAuthorizationPolicy myAuthPolicy = _mediaContext.ContentKeyAuthorizationPolicies.Where(p => p.Id == contentKey.AuthorizationPolicyId).FirstOrDefault();
+                if (myAuthPolicy != null)
                 {
-                    string name = option.Name;
-                    string id = option.Id;
+                    Console.WriteLine("        AuthorizationPolicyOptions List", contentKey.Name);
+                    foreach (var option in myAuthPolicy.Options)
+                    {
+                        Console.WriteLine("        Name : {0}", option.Name);
+                        Console.WriteLine("        AuthorizationPolicyOption : {0}", option.Id);
+                    }
 
-                    Console.WriteLine("        Name : {0}", name);
-                    Console.WriteLine("        AuthorizationPolicyOption : {0}", id);
+                    options = myAuthPolicy.Options;
                 }
-
-                return myAuthPolicy.Options;
             }
 
-            return null;
+            return options;
         }
 
         private static string GetTokenString(CloudMediaContext _mediaContext, IContentKey contentKey, IContentKeyAuthorizationPolicyOption SelectedOption, DateTime? tokenExpiration = null)
