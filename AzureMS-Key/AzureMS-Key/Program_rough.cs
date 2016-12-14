@@ -22,7 +22,7 @@ namespace AzureMS_Key
     class Program_rough
     {
         
-        static void Main(string[] args)
+        static void Main2(string[] args)
         {
             string tokenTemplateString = string.Empty;
             TokenRestrictionTemplate tokenTemplate = null;
@@ -32,7 +32,7 @@ namespace AzureMS_Key
             string name = string.Empty;
             string id = string.Empty;
 
-            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"JikvgXjlQIkFlxZe+P/TVhAaJ08msLao6OarD+gpS24=");
+            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"**************");
 
             Console.WriteLine("Listing Assets");
             foreach (var asset in _mediaContext.Assets)

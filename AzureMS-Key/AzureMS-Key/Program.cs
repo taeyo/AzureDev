@@ -35,7 +35,7 @@ namespace AzureMS_Key
             string name = string.Empty;
             string id = string.Empty;
 
-            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"**************");
+            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"****************");
 
             Console.WriteLine("Listing Assets");
             foreach (var asset in _mediaContext.Assets)
