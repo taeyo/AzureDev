@@ -22,5 +22,6 @@
 5. [Azure Media Service에서 Dynamic DRM Token 생성하는 예제](AzureMS-Key)
     - AES/PlayReady 기반의 DRM이 걸려있는 Asset에 대해서 자동으로 SWT, JWT 토큰을 만드는 예제
     - JWT는 Symmetric만 구현, X509 Cert는 구현하지 않음.
-    - 완전한 소스라기 보다는 흐름을 참고하기 위한 용도로 활용하는 것이 좋음.
-    - [Azure Media Explorer](https://github.com/Azure/Azure-Media-Services-Explorer)의 소스를 참고했음.
+    - 데모 소스이므로 단지 흐름을 참고하기 위한 용도로 활용하는 것이 좋음.
+    - 더 깊은 내용은 [Azure Media Explorer](https://github.com/Azure/Azure-Media-Services-Explorer)의 소스를 참고바람
+    
