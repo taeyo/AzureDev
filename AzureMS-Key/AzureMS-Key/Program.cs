@@ -109,13 +109,13 @@ namespace AzureMS_Key
                     }
                 }
 
-                // SWT Symmetric인 경우
+                // Symmetric인 경우
                 if (tokenTemplate.PrimaryVerificationKey.GetType() == typeof(SymmetricVerificationKey))
                 {
                     InMemorySymmetricSecurityKey tokenSigningKey = new InMemorySymmetricSecurityKey((tokenTemplate.PrimaryVerificationKey as SymmetricVerificationKey).KeyValue);
                     signingcredentials = new SigningCredentials(tokenSigningKey, SecurityAlgorithms.HmacSha256Signature, SecurityAlgorithms.Sha256Digest);
                 }
-                // SWT X509인 경우
+                // X509인 경우
                 else if (tokenTemplate.PrimaryVerificationKey.GetType() == typeof(X509CertTokenVerificationKey))
                 {
                     throw new NotImplementedException("아직 구현하지 않음");
