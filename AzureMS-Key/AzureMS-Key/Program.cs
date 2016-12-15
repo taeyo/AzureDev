@@ -1,21 +1,11 @@
-﻿using Microsoft.WindowsAzure.MediaServices.Client;
-using Microsoft.WindowsAzure.MediaServices.Client.ContentKeyAuthorization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.IdentityModel.Tokens;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+using Microsoft.WindowsAzure.MediaServices.Client;
+using Microsoft.WindowsAzure.MediaServices.Client.ContentKeyAuthorization;
+using Microsoft.WindowsAzure;
 
 namespace AzureMS_Key
 {
@@ -32,22 +22,23 @@ namespace AzureMS_Key
             IContentKeyAuthorizationPolicyOption selectedOption = null;
             Guid rawkey;
             string token = string.Empty;
-            string name = string.Empty;
-            string id = string.Empty;
 
-            CloudMediaContext _mediaContext = new CloudMediaContext(@"taeyoams", @"******************");
+            string azureMediaAccount = CloudConfigurationManager.GetSetting("AzureMediaAccount");
+            string azureMediaAccessKey = CloudConfigurationManager.GetSetting("AzureMediaAccessKey");
+
+            CloudMediaContext _mediaContext = new CloudMediaContext(azureMediaAccount, azureMediaAccessKey);
 
             Console.WriteLine("Listing Assets");
             foreach (var asset in _mediaContext.Assets)
             {
-                Console.WriteLine("Asset Name : {0}", asset.Name);
-                Console.WriteLine("Asset ID : {0}", asset.Id);
+                Console.WriteLine($"Asset Name : {asset.Name}");
+                Console.WriteLine($"Asset ID : {asset.Id}");
 
                 if (asset.ContentKeys.Count > 0) Console.WriteLine("Listing ContentKeys");
                 foreach (var contentKey in asset.ContentKeys)
                 {
-                    Console.WriteLine("    ContentKeys Name : {0}", contentKey.Name);
-                    Console.WriteLine("    ContentKeys id : {0}", contentKey.Id);
+                    Console.WriteLine($"    ContentKeys Name : {contentKey.Name}");
+                    Console.WriteLine($"    ContentKeys id : {contentKey.Id}");
 
                     var options = ListContentKeyAuthorizationPolicyOptions(_mediaContext, contentKey);
                     if(options == null)
@@ -67,9 +58,10 @@ namespace AzureMS_Key
                     token = GetTokenString(_mediaContext, contentKey, selectedOption);
 
                     Console.WriteLine("Token : " + token);
-                    Console.WriteLine("------------------------------------------------");
+                    Console.WriteLine("");
                 }
                 Console.WriteLine("#######################################################");
+                Console.WriteLine("");
             }
 
             //특정 ContentKey 찾기
@@ -106,11 +98,11 @@ namespace AzureMS_Key
                 IContentKeyAuthorizationPolicy myAuthPolicy = _mediaContext.ContentKeyAuthorizationPolicies.Where(p => p.Id == contentKey.AuthorizationPolicyId).FirstOrDefault();
                 if (myAuthPolicy != null)
                 {
-                    Console.WriteLine("        AuthorizationPolicyOptions List", contentKey.Name);
+                    Console.WriteLine($"        AuthorizationPolicyOptions List");
                     foreach (var option in myAuthPolicy.Options)
                     {
-                        Console.WriteLine("        Name : {0}", option.Name);
-                        Console.WriteLine("        AuthorizationPolicyOption : {0}", option.Id);
+                        Console.WriteLine($"        Name : {option.Name}");
+                        Console.WriteLine($"        AuthorizationPolicyOption : {option.Id}");
                     }
 
                     options = myAuthPolicy.Options;
@@ -174,7 +166,7 @@ namespace AzureMS_Key
                 JwtSecurityToken token = new JwtSecurityToken(
                     issuer: tokenTemplate.Issuer.ToString(), 
                     audience: tokenTemplate.Audience.ToString(), 
-                    notBefore: DateTime.Now.AddMinutes(-10), 
+                    notBefore: null, 
                     expires: dateTokenExpiration, 
                     signingCredentials: signingcredentials, 
                     claims: myclaims);
