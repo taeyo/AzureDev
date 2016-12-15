@@ -17,9 +17,6 @@ namespace AzureMS_Key
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            string tokenTemplateString = string.Empty;
-            TokenRestrictionTemplate tokenTemplate = null;
-            IContentKeyAuthorizationPolicyOption selectedOption = null;
             Guid rawkey;
             string token = string.Empty;
 
@@ -35,30 +32,43 @@ namespace AzureMS_Key
                 Console.WriteLine($"Asset ID : {asset.Id}");
 
                 if (asset.ContentKeys.Count > 0) Console.WriteLine("Listing ContentKeys");
+
+                // ContentKeys 추출 및 나열
                 foreach (var contentKey in asset.ContentKeys)
                 {
                     Console.WriteLine($"    ContentKeys Name : {contentKey.Name}");
                     Console.WriteLine($"    ContentKeys id : {contentKey.Id}");
 
-                    var options = ListContentKeyAuthorizationPolicyOptions(_mediaContext, contentKey);
-                    if(options == null)
+                    // AuthorizationPolicy 추출 및 나열
+                    if (contentKey.AuthorizationPolicyId != null)
                     {
-                        Console.WriteLine("Can not create Token because AuthorizationPolicyId is not exist");
-                        continue;
+                        IContentKeyAuthorizationPolicy myAuthPolicy = _mediaContext.ContentKeyAuthorizationPolicies.Where(p => p.Id == contentKey.AuthorizationPolicyId).FirstOrDefault();
+                        if (myAuthPolicy != null && myAuthPolicy.Options.Count > 0)
+                        {
+                            // 허가정책이 없으면 토큰을 생성할 수 없음
+                            Console.WriteLine($"        AuthorizationPolicyOptions List");
+
+                            // 각 허가정책마다 토큰을 생성
+                            foreach (var option in myAuthPolicy.Options)
+                            {
+                                Console.WriteLine($"        Name : {option.Name}");
+                                Console.WriteLine($"        AuthorizationPolicyOption : {option.Id}");
+
+                                // ContentKey를 GUID 형식으로 바꿔줌.
+                                rawkey = EncryptionUtils.GetKeyIdAsGuid(contentKey.Id);
+                                // 실제 토큰 생성
+                                token = GetTokenString(_mediaContext, contentKey, option);
+
+                                Console.WriteLine("        Token : " + token);
+                                Console.WriteLine("");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(" -- Can not create Token because AuthorizationPolicyId is not exist");
                     }
 
-                    selectedOption = options.FirstOrDefault();
-
-                    //첫번째 Option을 무조건 채택했음.
-                    tokenTemplateString = selectedOption.Restrictions.FirstOrDefault().Requirements;
-                    tokenTemplate = TokenRestrictionTemplateSerializer.Deserialize(tokenTemplateString);
-
-                    // 콘텐트 키를 GUID 형식으로 바꿔줌.
-                    rawkey = EncryptionUtils.GetKeyIdAsGuid(contentKey.Id);
-                    token = GetTokenString(_mediaContext, contentKey, selectedOption);
-
-                    Console.WriteLine("Token : " + token);
-                    Console.WriteLine("");
                 }
                 Console.WriteLine("#######################################################");
                 Console.WriteLine("");
@@ -87,29 +97,6 @@ namespace AzureMS_Key
 
             //Console.WriteLine(token);
             Console.ReadLine();
-        }
-
-        private static IList<IContentKeyAuthorizationPolicyOption> ListContentKeyAuthorizationPolicyOptions(CloudMediaContext _mediaContext, IContentKey contentKey)
-        {
-            IList<IContentKeyAuthorizationPolicyOption> options = null;
-
-            if (contentKey.AuthorizationPolicyId != null)
-            {
-                IContentKeyAuthorizationPolicy myAuthPolicy = _mediaContext.ContentKeyAuthorizationPolicies.Where(p => p.Id == contentKey.AuthorizationPolicyId).FirstOrDefault();
-                if (myAuthPolicy != null)
-                {
-                    Console.WriteLine($"        AuthorizationPolicyOptions List");
-                    foreach (var option in myAuthPolicy.Options)
-                    {
-                        Console.WriteLine($"        Name : {option.Name}");
-                        Console.WriteLine($"        AuthorizationPolicyOption : {option.Id}");
-                    }
-
-                    options = myAuthPolicy.Options;
-                }
-            }
-
-            return options;
         }
 
         private static string GetTokenString(CloudMediaContext _mediaContext, IContentKey contentKey, IContentKeyAuthorizationPolicyOption SelectedOption, DateTime? tokenExpiration = null)
