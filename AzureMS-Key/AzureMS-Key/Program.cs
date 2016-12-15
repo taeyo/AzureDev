@@ -17,7 +17,6 @@ namespace AzureMS_Key
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Guid rawkey;
             string token = string.Empty;
 
             string azureMediaAccount = CloudConfigurationManager.GetSetting("AzureMediaAccount");
@@ -54,8 +53,6 @@ namespace AzureMS_Key
                                 Console.WriteLine($"        Name : {option.Name}");
                                 Console.WriteLine($"        AuthorizationPolicyOption : {option.Id}");
 
-                                // ContentKey를 GUID 형식으로 바꿔줌.
-                                rawkey = EncryptionUtils.GetKeyIdAsGuid(contentKey.Id);
                                 // 실제 토큰 생성
                                 token = GetTokenString(_mediaContext, contentKey, option);
 
@@ -74,28 +71,6 @@ namespace AzureMS_Key
                 Console.WriteLine("");
             }
 
-            //특정 ContentKey 찾기
-            //string strContentKey = "ContentKey Envelope";
-            //IContentKey contentKey = _mediaContext.ContentKeys.Where(c => c.Name == strContentKey).First();
-            //Uri keyDeliveryServiceUri = contentKey.GetKeyDeliveryUrl(ContentKeyDeliveryType.BaselineHttp);
-
-            //첫번째 Option을 무조건 채택했음.
-            // ContentKeyAuthorizationPolicyOption을 선택하고, 그로부터 토큰 템플릿을 추출
-            //IContentKeyAuthorizationPolicyOption selectedOption = null;
-            //IContentKeyAuthorizationPolicy myAuthPolicy = _mediaContext.ContentKeyAuthorizationPolicies.Where(p => p.Id == contentKey.AuthorizationPolicyId).FirstOrDefault();
-            //if (myAuthPolicy != null)
-            //{
-            //    selectedOption = myAuthPolicy.Options[0];
-            //}
-
-            //string tokenTemplateString = selectedOption.Restrictions.FirstOrDefault().Requirements;
-            //TokenRestrictionTemplate tokenTemplate = TokenRestrictionTemplateSerializer.Deserialize(tokenTemplateString);
-
-            //// 콘텐트 키를 GUID 형식으로 바꿔줌.
-            //Guid rawkey = EncryptionUtils.GetKeyIdAsGuid(contentKey.Id);
-            //string token = GetTokenString(_mediaContext, contentKey, selectedOption);
-
-            //Console.WriteLine(token);
             Console.ReadLine();
         }
 
@@ -104,7 +79,6 @@ namespace AzureMS_Key
             DateTime dateTokenExpiration = tokenExpiration ?? DateTime.Now.AddHours(1);
 
             // ContentKeyAuthorizationPolicyOption을 선택하고, 그로부터 토큰 템플릿을 추출
-            //IContentKeyAuthorizationPolicyOption SelectedOption = _mediaContext.ContentKeyAuthorizationPolicyOptions.FirstOrDefault();
             string tokenTemplateString = SelectedOption.Restrictions.FirstOrDefault().Requirements;
             TokenRestrictionTemplate tokenTemplate = TokenRestrictionTemplateSerializer.Deserialize(tokenTemplateString);
 
