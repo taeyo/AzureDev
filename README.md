@@ -19,3 +19,8 @@
     - Azure SQL Database의 스케일을 변경할 수 있는 PowerShell Workflow Runbook
     - Azure Aumomation을 사용해서 특정 시간에 실행되도록 하거나 반복되게 할 수 있음
     - 새벽 시간에는 낮은 Tier로 구동하고, 낮 시간에는 높은 Tier로 구동하게 하고싶을 경우 등에 사용 가능
+5. [Azure Media Service에서 Dynamic DRM Token 생성하는 예제](AzureMS-Key)
+    - AES/PlayReady 기반의 DRM이 걸려있는 Asset에 대해서 자동으로 SWT, JWT 토큰을 만드는 예제
+    - JWT는 Symmetric만 구현, X509 Cert는 구현하지 않음.
+    - 완전한 소스라기 보다는 흐름을 참고하기 위한 용도로 활용하는 것이 좋음.
+    - [Azure Media Explorer](https://github.com/Azure/Azure-Media-Services-Explorer)의 소스를 참고했음.
