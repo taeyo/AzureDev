@@ -24,13 +24,15 @@ namespace AzureMS_Key
 
             CloudMediaContext _mediaContext = new CloudMediaContext(azureMediaAccount, azureMediaAccessKey);
 
-            Console.WriteLine("Listing Assets");
+            Console.WriteLine("Listing Assets.....");
+            Console.WriteLine("#######################################################");
+
             foreach (var asset in _mediaContext.Assets)
             {
                 Console.WriteLine($"Asset Name : {asset.Name}");
                 Console.WriteLine($"Asset ID : {asset.Id}");
 
-                if (asset.ContentKeys.Count > 0) Console.WriteLine("Listing ContentKeys");
+                if (asset.ContentKeys.Count > 0) Console.WriteLine("Listing ContentKeys.....");
 
                 // ContentKeys 추출 및 나열
                 foreach (var contentKey in asset.ContentKeys)
@@ -45,7 +47,7 @@ namespace AzureMS_Key
                         if (myAuthPolicy != null && myAuthPolicy.Options.Count > 0)
                         {
                             // 허가정책이 없으면 토큰을 생성할 수 없음
-                            Console.WriteLine($"        AuthorizationPolicyOptions List");
+                            Console.WriteLine($"       [List of AuthorizationPolicyOptions]");
 
                             // 각 허가정책마다 토큰을 생성
                             foreach (var option in myAuthPolicy.Options)
@@ -56,18 +58,18 @@ namespace AzureMS_Key
                                 // 실제 토큰 생성
                                 token = GetTokenString(_mediaContext, contentKey, option);
 
-                                Console.WriteLine("        Token : " + token);
-                                Console.WriteLine("");
+                                Console.WriteLine($"        Token : {token}");
+                                Console.WriteLine("-----------------------------------------------------");
                             }
                         }
                     }
                     else
                     {
-                        Console.WriteLine(" -- Can not create Token because AuthorizationPolicyId is not exist");
+                        Console.WriteLine(" -- Can't create token because AuthorizationPolicyId is not exist");
                     }
-
+                    Console.WriteLine("----------------------- End of ContentKey -----------------------");
                 }
-                Console.WriteLine("#######################################################");
+                Console.WriteLine("####################### End of Asset ##########################");
                 Console.WriteLine("");
             }
 
@@ -133,9 +135,9 @@ namespace AzureMS_Key
                     claims: myclaims);
                 JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
                 testToken = handler.WriteToken(token);
-            }            
+            }
 
-            return "Bearer " + testToken; ;
+            return $"Bearer {testToken}";
         }
     }
 }
